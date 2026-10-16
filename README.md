@@ -1,60 +1,65 @@
 # Learning Python 🐍
 
-Repositório dedicado ao estudo prático e contínuo de fundamentos de programação e resolução de problemas utilizando **Python**.
+Repositório dedicado ao estudo prático de fundamentos da linguagem, estruturas de dados e arquitetura de software orientada a objetos (**POO**).
 
 ---
 
-## 🚀 Projeto em Destaque
+## 🏆 Top 5 Projetos em Destaque
 
-### 🎮 Sertão Roguelike RPG (`rpg.py`)
-Jogo em modo texto desenvolvido no terminal explorando mecânicas completas de RPG:
-* **Gerenciamento de Estado**: Vida, vida máxima, ataque, inventário dinâmico e saldo de ouro.
-* **Sistema de Combate por Turnos**: Controle matemático de dano com travas de limite (`min` / `max`) evitando valores negativos ou vidas estouradas.
-* **Economia e Inventário**: Loja com itens consumíveis clonados por valor (`.copy()`), evitando corrupção de estado por referência na memória.
-* **Mochila Dinâmica**: Consumo e remoção de itens em tempo de execução via `list.pop()`.
-* **Tratamento de Entradas**: Validação com `.isdigit()` impedindo encerramento abrupto (`ValueError`).
+Aqui estão os 5 projetos de maior maturidade arquitetural e lógica do repositório:
 
-```bash
-# Como executar o RPG:
-python rpg.py
-```
+### 1. ⚔️ Sertão Roguelike 2.0 (`rpg_poo.py`)
+> **O auge da arquitetura Orientada a Objetos.**  
+* **Herança & `super()`:** Classe base `Personagem` herdada por `Guerreiro`, `Mago`, `Arqueiro` e `Monstro`, eliminando duplicação de código.
+* **Polimorfismo:** Método `usar_especial()` padronizado em todas as classes, permitindo um motor de combate unificado que descobre a habilidade certa de cada herói em tempo de execução.
+* **Gestão de Recursos:** Controle de `mana` para o Mago e limite de vigor/usos para o Guerreiro.
+* **Geração Dinâmica:** Instanciação em tempo real de monstros com atributos sorteados.
+
+### 2. 🏜️ Sertão Roguelike 1.0 (`rpg.py`)
+> **Jogo roguelike procedural completo no terminal.**  
+* Exploração com encontros aleatórios, loja de consumíveis e mochila dinâmica (`list.pop()`).
+* Travas matemáticas `min()` e `max()` para evitar vidas estouradas ou números negativos em combate.
+* Tratamento de exceções com `.isdigit()` impedindo encerramento abrupto por erros de digitação.
+
+### 3. 🏦 Sistema Bancário (`banco.py` & `banco_teste.py`)
+> **Simulador de operações financeiras e regras de negócio.**  
+* Fluxo completo de depósito, saque e consulta de extrato.
+* Encapsulamento de saldo e validação de operações contra saques impossíveis.
+* Suíte de testes lógicos para validação de integridade financeira.
+
+### 4. 🛒 Gestão Comercial & Estoque (`gerenciamento_produtos.py` & `loja.py`)
+> **Controle de catálogo e fluxo de caixa de vendas.**  
+* Estruturação de dados com listas de dicionários representando inventários.
+* Atualização de quantidades, precificação e cálculo automático de saldo e faturamento.
+
+### 5. 🔐 Criptografia & Segurança (`criptografia.py` & `forca_senha.py`)
+> **Ofuscação de mensagens e análise de credenciais.**  
+* Implementação de cifra para embaralhamento e decodificação de mensagens.
+* Validador de complexidade de senhas através de análise estrita de caracteres (maiúsculas, minúsculas, números e símbolos).
 
 ---
 
-## 📂 Projetos e Exercícios de Fixação
+## 📂 Outros Exercícios de Fixação
 
-| Arquivo | Descrição | Conceitos Aplicados |
-| :--- | :--- | :--- |
-| `rpg.py` | RPG roguelike por turnos com combate, loja e mochila | Loops, Dicionários, Clonagem de Memória, Validações |
-| `banco.py` | Sistema bancário com depósito, saque e extrato | Condicionais, Formatação numérica, Controle de saldo |
-| `banco_teste.py` | Testes de operações e regras de negócio bancárias | Validação lógica e cenários de teste |
-| `calculadora_gastos.py` | Controle financeiro simples de despesas | Operações matemáticas, Acumuladores |
-| `calculadora_imc.py` | Classificação de índice de massa corporal | Condicionais encadeadas (`if/elif/else`) |
-| `calculo_lucro.py` | Análise de receita, custos e margem líquida | Operadores aritméticos, Regras financeiras |
-| `calculo_vendas_bonus.py` | Bonificação por meta atingida | Lógica condicional e cálculo percentual |
-| `carrinho_compras.py` | Simulação de checkout e soma de itens | Listas, Iteração (`for`), totalização |
-| `criptografia.py` | Cifra e ofuscação básica de mensagens | Manipulação de strings, laços |
-| `dados.py` | Tratamento e estruturação de dados tabulares/listas | Estruturas de dados básicas |
-| `gerenciador_contatos.py` | Agenda com busca e cadastro de contatos | Dicionários, Chave-valor |
-| `gerenciamento_produtos.py` | Controle de estoque e catálogo | Listas de dicionários, Atualização de dados |
-| `loja.py` | Sistema de compras e fluxo de caixa de loja | Menus iterativos, Entrada de usuário |
-| `senha.py` | Validador e gerador de requisitos de senha | Manipulação de caracteres, Checagem de complexidade |
-| `sistema_agenda.py` | Agendamento e gerenciamento de compromissos | Listas, Filtros, Busca |
-| `sistema_notas.py` | Cálculo de médias escolares e aprovação | Funções embutidas, Listas, Médias |
+Além dos projetos principais, o repositório conta com exercícios focados em fundamentos de lógica e manipulação de dados:
+
+* **Cálculos & Finanças:** `calculadora_gastos.py`, `calculo_lucro.py`, `calculo_vendas_bonus.py`, `carrinho_compras.py`.
+* **Saúde & Utilitários:** `calculadora_imc.py`, `dados.py`, `senha.py`.
+* **Gestão & Produtividade:** `gerenciador_contatos.py`, `sistema_agenda.py`, `sistema_notas.py`.
 
 ---
 
 ## 🛠️ Como Executar
 
-1. **Pré-requisitos**: Ter o [Python 3.10+](https://www.python.org/) instalado.
-2. **Clonar o repositório**:
+1. **Pré-requisitos:** Ter o [Python 3.10+](https://www.python.org/) instalado.
+2. **Clonar o repositório:**
    ```bash
-   git clone https://github.com/FelipeJesus83/Learning.phyton.git
-   cd Learning.phyton
+   git clone https://github.com/FelipeJesus83/learning-python.git
+   cd learning-python
    ```
-3. **Executar qualquer script**:
+3. **Executar qualquer projeto:**
    ```bash
-   python nome_do_arquivo.py
+   python rpg_poo.py
    ```
 
 ---
