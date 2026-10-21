@@ -76,14 +76,18 @@ class Conta(Pessoa):
         super().__init__(nome, idade, cpf)
         self.cliente = cliente
         self.numero_cnt = 1001
-        self.saldo = 0.0
+        self._saldo = 0.0
         self.historico = []
+
+    @property
+    def saldo(self):
+        return self._saldo
 
     def depositar(self):
         valor = float(input('Quanto você quer depositar: '))
         if valor > 0.0:
             self.historico.append(f'Depósito: R${valor:.2f}')
-            self.saldo += valor
+            self._saldo += valor
             print(f'Você fez um depósito de: R${valor:.2f}')
         else:
             print('Saldo insuficiente!')
@@ -91,7 +95,7 @@ class Conta(Pessoa):
     def sacar(self):
         scr = float(input('Quanto você quer sacar: '))
         if scr <= self.saldo:
-            self.saldo -= scr
+            self._saldo -= scr
             print(f'Você sacou R${scr:.2f} da sua conta!')
             print(f'Saldo: R${self.saldo}')
         else:
@@ -113,7 +117,7 @@ class ContaCorrente(Conta):
         scr = float(input('Quanto você quer sacar: '))
         total_scr = scr + 2 #taxa do banco
         if total_scr <= (self.saldo + self.cheque):
-            self.saldo -= total_scr
+            self._saldo -= total_scr
             print(f'Você sacou {scr:.2f} da sua conta!')
             self.historico.append(f'Saque de: R${scr:.2f} com taxa de R$2,0')
         else:
@@ -126,7 +130,7 @@ class ContaPoupanca(Conta):
 
     def render_jrs(self):
         rendimento = self.saldo * self.taxa_jrs
-        self.saldo += rendimento
+        self._saldo += rendimento
         self.historico.append(f'Rendimento: R${rendimento:.2f}')
         print(f'Sua conta rendeu R${rendimento}! Seu saldo atual e de: R${self.saldo:.2f}')
 
@@ -163,34 +167,94 @@ def escolha(p1):
 p1 = cadastro()
 conta_atv = escolha(p1)
 
+# Funcionário e Gerente pré-cadastrados no banco
+f1 = Funcionario('Lucas Silva', 25, '111.222.333-44', matricula=101)
+g1 = Gerente('Carlos Mendes', 42, '999.888.777-66', matricula=201, bonus=1500)
+g1.senha = 'admin123'
+
 while True:
-    print('\n== BANCO DIGITAL ==')
-    print('1 - Depositar')
-    print('2 - Sacar')
-    print('3 - Extrato')
-    print('4 - Render Juros (Apenas Poupança)')
-    print('5 - Ver Dados do Titular (Pessoa + Endereço)')
-    print('6 - Sair')
-    opc = int(input('Escolha uma opção: '))
+    print('== BEM-VINDO AO BANCO ==')
+    print('1 - Sou Cliente')
+    print('2 - Sou Funcionário')
+    print('3 - Sou Gerente')
+    print('4 - Sair ')
+
+
+    opc = int(input('Escolha: '))
 
     if opc == 1:
-        conta_atv.depositar()
+        while True:
+            print('\n== BANCO DIGITAL ==')
+            print('1 - Depositar')
+            print('2 - Sacar')
+            print('3 - Extrato')
+            print('4 - Render Juros (Apenas Poupança)')
+            print('5 - Ver Dados do Titular (Pessoa + Endereço)')
+            print('6 - Sair')
+            opc = int(input('Escolha uma opção: '))
+
+            if opc == 1:
+                conta_atv.depositar()
+            elif opc == 2:
+                    conta_atv.sacar()
+            elif opc == 3:
+                conta_atv.extrato()
+            elif opc == 4:
+                if isinstance(conta_atv,ContaPoupanca):
+                    conta_atv.render_jrs()
+                else:
+                    print('Opção inválida! Sua conta é Corrente, não Poupança!')
+            elif opc == 5:
+                p1.exibir_dados()
+            elif opc == 6:
+                print('Obrigado por usar o Banco Digital, Adeus...')
+                break
+            else:
+                print('Opção inválida!')
+
     elif opc == 2:
-        conta_atv.sacar()
-    elif opc == 3:
-        conta_atv.extrato()
-    elif opc == 4:
-        if isinstance(conta_atv,ContaPoupanca):
-            conta_atv.render_jrs()
+        mtc = int(input('Digite sua matricula: '))
+        if mtc == f1.matricula:
+            print(f'Olá, {f1.nome}! Seu salário é: R$ {f1.calcular_pagamento():.2f}')
         else:
-            print('Opção inválida! Sua conta é Corrente, não Poupança!')
-    elif opc == 5:
-        p1.exibir_dados()
-    elif opc == 6:
-        print('Obrigado por usar o Banco Digital, Adeus...')
+            print('Matricula inválida!')
+
+    elif opc == 3:
+        mtc = int(input('Digite sua matricula: '))
+        senha = input('Digite sua senha: ')
+
+        if mtc == g1.matricula and senha == g1.senha:
+            print(f'Olá, Gerente {g1.nome}! Seu salário total com bônus é: R$ {g1.calcular_pagamento():.2f}')
+            if isinstance (conta_atv, ContaCorrente):
+                nv = input('Deseja mudar o valor do cheque especial do cliente(s/n) :').lower().strip()
+                if nv == 's':
+                    novo_valor = float(input('Digite o novo valor do cheque especial: '))
+                    if novo_valor <= 0:
+                        print('Escolha um valor maior que zero!')
+                    else:
+                        conta_atv.cheque = novo_valor
+                        print(f'Valor do cheque especial trocado para: {novo_valor:.2f}')
+                else:
+                    print('Operação cancelada! Valor do cheque especial mantido.')
+            else:
+                print('Aviso: A conta do cliente atual é Poupança, não possui cheque especial.')
+
+        else:
+            print('Matricula ou Senha inválidas')
+
+    elif opc == 4:
+        print('Obrigado por usar o Banco Digital! Adeus...')
         break
+
     else:
-        print('Opção inválida!')
+        print('Opção inválida')
+
+
+                
+
+
+
+
 
         
 
